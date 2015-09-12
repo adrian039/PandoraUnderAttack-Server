@@ -13,7 +13,7 @@ import com.google.gson.JsonPrimitive;
 
 public class Servidor {
 	ServerSocket servidor=null;
-	Socket socket;
+	public static Socket socket;
 	BufferedReader lector=null;
 	PrintWriter escritor=null;
 	Gson gson = new Gson();
@@ -30,7 +30,7 @@ public class Servidor {
 			try{
 			servidor=new ServerSocket(8080);
 			while(true){
-				socket=servidor.accept();
+				Servidor.socket=servidor.accept();
 				leer();
 				
 			}
@@ -79,7 +79,7 @@ public class Servidor {
 			public void run(){
 				System.out.println(dato);
 				try{
-					escritor= new PrintWriter(socket.getOutputStream(),true);
+					escritor= new PrintWriter(Servidor.socket.getOutputStream(),true);
 					escritor.println(dato);
 				}catch(Exception ex){
 					ex.printStackTrace();
@@ -87,6 +87,9 @@ public class Servidor {
 			}
 		});
 	escribir_hilo.start();
+	}
+	public void enviar(Socket conector, String dato){
+		
 	}
 	
 	
