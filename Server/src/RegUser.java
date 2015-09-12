@@ -1,20 +1,23 @@
+
+
+import java.io.IOException;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class RegUser {
-	Servidor respuesta=null;
 	Gson gson = new Gson();
-	ListaEnlazada listaUsuarios=null;
-	Comparar comparar= null;
+	ListaEnlazada listaUsuarios;
+	Comparar comparar=new Comparar();
 	public RegUser(){
 		
 	}
-	public void newUser(JsonElement elemento){
+	public void newUser(JsonElement elemento) throws IOException{
+		Servidor respuesta=new Servidor();
 		//respuesta=new Servidor();
-		String usuario=elemento.getAsJsonObject().get("nombre").getAsString();
+		String user=elemento.getAsJsonObject().get("nombre").getAsString();
 		if(true){
-			Gson gson = new Gson();
 			listaUsuarios=new ListaEnlazada();
 			listaUsuarios.add(elemento);
 			System.out.println(listaUsuarios.get(0)); 
@@ -33,6 +36,7 @@ public class RegUser {
             String comparar=gson.toJson(comp);
 			respuesta.escribir(comparar);
 		}
+		
 	}
 	
 	

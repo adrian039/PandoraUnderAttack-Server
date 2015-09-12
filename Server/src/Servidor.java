@@ -2,6 +2,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.net.*;
+import java.util.concurrent.Semaphore;
 import java.io.*;
 import java.awt.event.*;
 import com.google.gson.Gson;
@@ -12,22 +13,18 @@ import com.google.gson.JsonPrimitive;
 
 public class Servidor {
 	ServerSocket servidor=null;
-	Socket socket=null;
+	Socket socket;
 	BufferedReader lector=null;
 	PrintWriter escritor=null;
 	Gson gson = new Gson();
-	RegUser registrar=null;
 	public Servidor(){
 		
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Servidor Server=new Servidor();
 		Server.iniciarHilo();
-		RegUser registrar=new RegUser();
 	}
 	public void iniciarHilo(){
-	
 	Thread principal=new Thread(new Runnable(){
 		public void run(){
 			try{
@@ -35,6 +32,7 @@ public class Servidor {
 			while(true){
 				socket=servidor.accept();
 				leer();
+				
 			}
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -45,18 +43,19 @@ public class Servidor {
 	System.out.println("Servidor iniciado......");
 	}
 	public void leer(){
-
 		Thread leer_hilo=new Thread(new Runnable(){
 		public void run(){
+			RegUser registrar=new RegUser();
 			try{
-				//RegUser registrar=new RegUser();
-				
 				lector=new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				while(true){
 					JsonParser parser = new JsonParser();
 					String mensaje= lector.readLine();
 					JsonElement elemento = parser.parse(mensaje);
 					String mensaje_in=elemento.getAsJsonObject().get("tipo").getAsString();
+					if (lector==null){
+						System.out.println("Conexion Interrumpida....");
+					}
 					if (mensaje_in.equals("registrar")){
 						System.out.println("Solicitud de Registro");
 						registrar.newUser(elemento);
@@ -64,6 +63,7 @@ public class Servidor {
 					else if (mensaje_in.equals("ingresar")){
 						System.out.println("Solicitud de Ingreso");
 					}
+					
 					
 				}
 			}catch(Exception ex){
@@ -74,16 +74,19 @@ public class Servidor {
 	});
 		leer_hilo.start();
 	}
-	public void escribir(String dato){
-		try{
-			escritor= new PrintWriter(socket.getOutputStream(),true);
-			escritor.println(dato);
+	public void escribir(final String dato){
+		Thread escribir_hilo=new Thread(new Runnable(){
+			public void run(){
+				System.out.println(dato);
+				try{
+					escritor= new PrintWriter(socket.getOutputStream(),true);
+					escritor.println(dato);
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
 			}
-		catch(Exception ex){
-			ex.printStackTrace();
-		}
-			
-		
+		});
+	escribir_hilo.start();
 	}
 	
 	
