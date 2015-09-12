@@ -11,16 +11,9 @@ public class RegUser {
 		
 	}
 	public void newUser(JsonElement elemento){
+		//respuesta=new Servidor();
 		String usuario=elemento.getAsJsonObject().get("nombre").getAsString();
-		if(comparar.UserComp(usuario).equals("false")){
-			JsonObject comp = new JsonObject();
-            comp.addProperty("tipo","registro");
-            comp.addProperty("estado","existe");
-            String comparar=gson.toJson(comp);
-			respuesta.escribir(comparar);
-			}
-		else
-		{
+		if(true){
 			Gson gson = new Gson();
 			listaUsuarios=new ListaEnlazada();
 			listaUsuarios.add(elemento);
@@ -30,6 +23,15 @@ public class RegUser {
 			o.addProperty("estado", String.valueOf("completo"));
 			String enviar_mensaje = gson.toJson(o);
 			respuesta.escribir(enviar_mensaje);
+			
+			}
+		else
+		{
+			JsonObject comp = new JsonObject();
+            comp.addProperty("tipo","registro");
+            comp.addProperty("estado","existe");
+            String comparar=gson.toJson(comp);
+			respuesta.escribir(comparar);
 		}
 	}
 	

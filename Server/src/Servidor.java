@@ -16,12 +16,14 @@ public class Servidor {
 	BufferedReader lector=null;
 	PrintWriter escritor=null;
 	Gson gson = new Gson();
+	RegUser registrar=null;
 	public Servidor(){
-		iniciarHilo();
+		
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new Servidor();
+		Servidor Server=new Servidor();
+		Server.iniciarHilo();
 		RegUser registrar=new RegUser();
 	}
 	public void iniciarHilo(){
@@ -47,7 +49,8 @@ public class Servidor {
 		Thread leer_hilo=new Thread(new Runnable(){
 		public void run(){
 			try{
-				RegUser registrar=new RegUser();
+				//RegUser registrar=new RegUser();
+				
 				lector=new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				while(true){
 					JsonParser parser = new JsonParser();
