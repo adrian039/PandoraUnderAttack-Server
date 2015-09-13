@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class RegUser {
+public class RegUser extends Servidor{
 	Gson gson = new Gson();
 	ListaEnlazada listaUsuarios;
 	Comparar comparar=new Comparar();
@@ -17,7 +17,7 @@ public class RegUser {
 		Servidor respuesta=new Servidor();
 		//respuesta=new Servidor();
 		String user=elemento.getAsJsonObject().get("nombre").getAsString();
-		if(true){
+		if(comparar.UserComp(user)){
 			listaUsuarios=new ListaEnlazada();
 			listaUsuarios.add(elemento);
 			System.out.println(listaUsuarios.get(0)); 
@@ -25,7 +25,7 @@ public class RegUser {
 			o.addProperty("tipo", String.valueOf("registro"));
 			o.addProperty("estado", String.valueOf("completo"));
 			String enviar_mensaje = gson.toJson(o);
-			respuesta.escribir(enviar_mensaje);
+			respuesta.escribir(socket, enviar_mensaje);
 			
 			}
 		else
@@ -34,7 +34,7 @@ public class RegUser {
             comp.addProperty("tipo","registro");
             comp.addProperty("estado","existe");
             String comparar=gson.toJson(comp);
-			respuesta.escribir(comparar);
+			respuesta.escribir(socket,comparar);
 		}
 		
 	}

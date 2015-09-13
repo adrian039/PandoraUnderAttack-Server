@@ -32,6 +32,7 @@ public class Servidor {
 			while(true){
 				Servidor.socket=servidor.accept();
 				leer();
+				escribir(socket,null);
 				
 			}
 			}catch(Exception ex){
@@ -64,7 +65,6 @@ public class Servidor {
 						System.out.println("Solicitud de Ingreso");
 					}
 					
-					
 				}
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -74,23 +74,16 @@ public class Servidor {
 	});
 		leer_hilo.start();
 	}
-	public void escribir(final String dato){
-		Thread escribir_hilo=new Thread(new Runnable(){
-			public void run(){
+	public void escribir(Socket socket1, String dato){
 				System.out.println(dato);
 				try{
-					escritor= new PrintWriter(Servidor.socket.getOutputStream(),true);
+					escritor= new PrintWriter(socket1.getOutputStream(),true);
 					escritor.println(dato);
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
-			}
-		});
-	escribir_hilo.start();
 	}
-	public void enviar(Socket conector, String dato){
-		
-	}
+	
 	
 	
 

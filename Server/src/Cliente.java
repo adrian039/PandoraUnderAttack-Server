@@ -62,7 +62,7 @@ public class Cliente {
 	Thread principal =new Thread(new Runnable(){
 		public void run(){
 			try{
-			socket=new Socket("localhost",8080);
+			socket=new Socket("192.168.1.109",8080);
 			leer();
 			escribir();
 			}catch(Exception e){
