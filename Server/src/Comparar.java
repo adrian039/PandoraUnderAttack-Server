@@ -1,13 +1,18 @@
+import java.net.Socket;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class Comparar extends Servidor{
+public class Comparar {
+	HiloServidor comunicacion;
+	Gson gson = new Gson();
 	public Comparar(){
-		
 	}
-	public boolean UserComp(String usuario){
+	public boolean UserComp(Socket socket, String usuario){
 		//listUsers=new RegUser();
+		comunicacion=new HiloServidor(socket);
 		if (Servidor.listaUsuarios==null){
 			System.out.println("Lista Vacia");
 			return true;
@@ -35,7 +40,8 @@ public class Comparar extends Servidor{
 			}
 		}
 	}
-	public void ValUser(JsonElement dato){
+	public void ValUser(Socket socket,JsonElement dato){
+		comunicacion=new HiloServidor(socket);
 		int tam=Servidor.listaUsuarios.size();
 		String userName=dato.getAsJsonObject().get("nombre").getAsString();
 		String userPass=dato.getAsJsonObject().get("clave").getAsString();
@@ -52,8 +58,8 @@ public class Comparar extends Servidor{
 				o.addProperty("tipo", String.valueOf("login"));
 				o.addProperty("estado", String.valueOf("completo"));
 				String enviar_mensaje = gson.toJson(o);
-				funcion=enviar_mensaje.toString();
-				escribir();
+				//funcion=enviar_mensaje.toString();
+				comunicacion.escribir(enviar_mensaje);
 				break;
 			}
 			else{}
@@ -64,8 +70,8 @@ public class Comparar extends Servidor{
 			o.addProperty("tipo", String.valueOf("login"));
 			o.addProperty("estado", String.valueOf("error"));
 			String enviar_mensaje = gson.toJson(o);
-			funcion=enviar_mensaje.toString();
-			escribir();
+			//funcion=enviar_mensaje.toString();
+			comunicacion.escribir(enviar_mensaje);
 		}
 	}
 
