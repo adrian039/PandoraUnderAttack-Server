@@ -50,6 +50,32 @@ public class ListaEnlazada {
 			indice=-1;
 		return indice;
 	}
+	public Object remove(int indice){
+		Nodo actual=null;
+		Nodo anterior=null;
+		if(indice>0){
+			anterior =obtenerNodo(indice-1);
+			actual=anterior.siguiente;
+			anterior.siguiente=actual.siguiente;
+			numElementos--;
+		}
+		if(indice==0){
+			actual=cabeza;
+			cabeza=cabeza.siguiente;
+			numElementos--;
+		}
+		if(actual!=null)
+			return actual.dato;
+		else
+			return null;
+	}
+	public int remove(Object elem){
+		int actual=indexOf(elem);
+		if(actual!=-1)
+			remove(actual);
+		
+		return actual;
+	}
 	public Object get(int indice){
 		return obtenerNodo(indice).dato;
 	}

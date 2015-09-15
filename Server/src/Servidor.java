@@ -16,6 +16,7 @@ public class Servidor {
 	String funcion;
 	public static ListaEnlazada listaUsuarios;
 	public static ListaEnlazada listaSockets;
+	public static ListaEnlazada listaClanes;
 	BufferedReader lector=null;
 	RegUser registrar=null;
 	PrintWriter escritor=null;
@@ -32,7 +33,7 @@ public class Servidor {
 				Socket socket=servidor.accept();
 				new HiloServidor(socket).start();
 				System.out.println("Nuevo cliente conectado: "+String.valueOf(socket));
-				listaSockets.add(socket);
+				AgregarSocket(socket);
 				}
 				catch(Exception ex){
 				ex.printStackTrace();
@@ -41,6 +42,22 @@ public class Servidor {
 	}catch(Exception e){
 		e.printStackTrace();
 	}
+	}
+	private static void AgregarSocket(Socket socket){
+		boolean result=false;
+		if(listaSockets!=null){
+			for(int s=0; s<listaSockets.size();s++){
+				if(listaSockets.get(s).equals(socket)){
+					result=true;
+					break;
+				}
+				else{}
+			}
+			if(result==false){
+				listaSockets.add(socket);
+			}
+			else{}
+		}
 	}
 	
 }

@@ -27,7 +27,7 @@ public class RegUser{
 			o.addProperty("estado", String.valueOf("completo"));
 			String enviar_mensaje = gson.toJson(o);
 			//funcion=enviar_mensaje.toString();
-			comunicacion.escribir(enviar_mensaje);
+			comunicacion.escribir(socket,enviar_mensaje);
 			System.out.println(Servidor.listaUsuarios); 
 		}
 		else if(comparar.UserComp(socket,user)){
@@ -38,7 +38,7 @@ public class RegUser{
 			o.addProperty("estado", String.valueOf("completo"));
 			String enviar_mensaje = gson.toJson(o);
 			//funcion=enviar_mensaje.toString();
-			comunicacion.escribir(enviar_mensaje);
+			comunicacion.escribir(socket,enviar_mensaje);
 			
 			}
 		else
@@ -48,7 +48,7 @@ public class RegUser{
             comp.addProperty("estado","existe");
             String comparar=gson.toJson(comp);
             //funcion=comparar.toString();
-            comunicacion.escribir(comparar);
+            comunicacion.escribir(socket, comparar);
 		}
 		
 	}

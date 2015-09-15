@@ -59,7 +59,7 @@ public class Comparar {
 				o.addProperty("estado", String.valueOf("completo"));
 				String enviar_mensaje = gson.toJson(o);
 				//funcion=enviar_mensaje.toString();
-				comunicacion.escribir(enviar_mensaje);
+				comunicacion.escribir(socket, enviar_mensaje);
 				break;
 			}
 			else{}
@@ -71,7 +71,7 @@ public class Comparar {
 			o.addProperty("estado", String.valueOf("error"));
 			String enviar_mensaje = gson.toJson(o);
 			//funcion=enviar_mensaje.toString();
-			comunicacion.escribir(enviar_mensaje);
+			comunicacion.escribir(socket, enviar_mensaje);
 		}
 	}
 

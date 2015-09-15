@@ -51,7 +51,7 @@ public class HiloServidor extends Thread{
 	});
 		leer_hilo.start();
 	}
-	public void escribir(final String dato){
+	public void escribir(final Socket socket, final String dato){
 		Thread escribir_hilo=new Thread(new Runnable(){
 			public void run(){
 					try{
