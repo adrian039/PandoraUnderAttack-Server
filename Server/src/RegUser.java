@@ -8,24 +8,34 @@ import com.google.gson.JsonObject;
 
 public class RegUser extends Servidor{
 	Gson gson = new Gson();
-	ListaEnlazada listaUsuarios;
 	Comparar comparar=new Comparar();
 	public RegUser(){
-		
 	}
-	public void newUser(JsonElement elemento) throws IOException{
-		Servidor respuesta=new Servidor();
+	public void newUser(JsonElement elemento){
+		System.out.println(Servidor.listaUsuarios);
 		//respuesta=new Servidor();
 		String user=elemento.getAsJsonObject().get("nombre").getAsString();
-		if(comparar.UserComp(user)){
-			listaUsuarios=new ListaEnlazada();
-			listaUsuarios.add(elemento);
-			System.out.println(listaUsuarios.get(0)); 
+		if(Servidor.listaUsuarios==null){
+			Servidor.listaUsuarios=new ListaEnlazada();
+			Servidor.listaUsuarios.add(elemento);
+			System.out.println(Servidor.listaUsuarios.get(0)); 
 			JsonObject o = new JsonObject();
 			o.addProperty("tipo", String.valueOf("registro"));
 			o.addProperty("estado", String.valueOf("completo"));
 			String enviar_mensaje = gson.toJson(o);
-			respuesta.escribir(socket, enviar_mensaje);
+			funcion=enviar_mensaje.toString();
+			escribir();
+			System.out.println(Servidor.listaUsuarios); 
+		}
+		else if(comparar.UserComp(user)){
+			Servidor.listaUsuarios.add(elemento);
+			System.out.println(Servidor.listaUsuarios.get(0)); 
+			JsonObject o = new JsonObject();
+			o.addProperty("tipo", String.valueOf("registro"));
+			o.addProperty("estado", String.valueOf("completo"));
+			String enviar_mensaje = gson.toJson(o);
+			funcion=enviar_mensaje.toString();
+			escribir();
 			
 			}
 		else
@@ -34,7 +44,8 @@ public class RegUser extends Servidor{
             comp.addProperty("tipo","registro");
             comp.addProperty("estado","existe");
             String comparar=gson.toJson(comp);
-			respuesta.escribir(socket,comparar);
+            funcion=comparar.toString();
+            escribir();
 		}
 		
 	}

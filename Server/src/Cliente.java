@@ -29,12 +29,13 @@ public class Cliente {
 	JPanel contenedor_areachat=null;
 	JPanel contenedor_btntxt=null;
 	JScrollPane scroll=null;
-	Socket socket=null;
+	public static Socket socket;
 	BufferedReader lector=null;
 	PrintWriter escritor=null;
 	Gson gson = new Gson();
 	public static void main(String[] args) {
 		new Cliente();
+		
 	}
 	public Cliente(){
 		hacerInterfaz();
@@ -62,9 +63,9 @@ public class Cliente {
 	Thread principal =new Thread(new Runnable(){
 		public void run(){
 			try{
-			socket=new Socket("192.168.1.109",8080);
+			Cliente.socket=new Socket("192.168.0.124",8080);
 			leer();
-			escribir();
+			//escribir();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -76,14 +77,14 @@ public class Cliente {
 		Thread leer_hilo=new Thread(new Runnable(){
 		public void run(){
 			try{
-				lector=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				lector=new BufferedReader(new InputStreamReader(Cliente.socket.getInputStream()));
 				while(true){
 					
 					JsonParser parser = new JsonParser();
 					String mensaje= lector.readLine();
-					JsonElement elemento = parser.parse(mensaje);
-					String mensaje_in=elemento.getAsJsonObject().get("mensaje").getAsString();
-					area_chat.append("Servidor: "+mensaje_in+"\n");
+					//JsonElement elemento = parser.parse(mensaje);
+					//String mensaje_in=elemento.getAsJsonObject().get("mensaje").getAsString();
+					area_chat.append("Servidor: "+mensaje+"\n");
 				}
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -97,7 +98,7 @@ public class Cliente {
 		Thread escribir_hilo=new Thread(new Runnable(){
 			public void run(){
 				try{
-					escritor= new PrintWriter(socket.getOutputStream(),true);
+					escritor= new PrintWriter(Cliente.socket.getOutputStream(),true);
 					btn_enviar.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e){
 							JsonObject o =new JsonObject();
