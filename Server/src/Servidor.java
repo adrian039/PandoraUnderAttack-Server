@@ -1,22 +1,18 @@
 
-import javax.swing.*;
-import java.awt.*;
-import java.net.*;
-import java.util.concurrent.Semaphore;
-import java.io.*;
-import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+
 
 public class Servidor {
 	ServerSocket servidor=null;
 	String funcion;
-	public static ListaEnlazada listaUsuarios;
-	public static ListaEnlazada listaSockets;
-	public static ListaEnlazada listaClanes;
+	public static ListaEnlazada listaUsuarios= new ListaEnlazada();
+	public static ListaEnlazada listaSockets= new ListaEnlazada();
+	public static ListaEnlazada listaClanes= new ListaEnlazada();
 	BufferedReader lector=null;
 	RegUser registrar=null;
 	PrintWriter escritor=null;
@@ -28,6 +24,7 @@ public class Servidor {
 		try{
 		Servidor server=new Servidor();
 		ServerSocket servidor=new ServerSocket(8080);
+		System.out.println("Servidor iniciado");
 		while(true){
 			try{
 				Socket socket=servidor.accept();
@@ -43,20 +40,23 @@ public class Servidor {
 		e.printStackTrace();
 	}
 	}
-	private static void AgregarSocket(Socket socket){
+	private static void AgregarSocket(Socket socket1){
 		boolean result=false;
-		if(listaSockets!=null){
-			for(int s=0; s<listaSockets.size();s++){
-				if(listaSockets.get(s).equals(socket)){
+		if(Servidor.listaSockets!=null){
+			for(int s=0; s<Servidor.listaSockets.size();s++){
+				if(Servidor.listaSockets.get(s).equals(socket1)){
 					result=true;
 					break;
 				}
 				else{}
 			}
 			if(result==false){
-				listaSockets.add(socket);
+				Servidor.listaSockets.add(socket1);
 			}
 			else{}
+		}
+		else{
+			Servidor.listaSockets.add(socket1);
 		}
 	}
 	

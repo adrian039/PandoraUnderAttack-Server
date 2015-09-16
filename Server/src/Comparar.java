@@ -40,6 +40,35 @@ public class Comparar {
 			}
 		}
 	}
+	public boolean ClanComp(Socket socket, String nombreClan){
+		comunicacion=new HiloServidor(socket);
+		if (Servidor.listaClanes==null){
+			System.out.println("Lista Vacia");
+			return true;
+		}
+		else{
+			int tam=Servidor.listaClanes.size();
+			String resultado="true";
+			for(int i=0; i< tam; i++){
+				Object clan=Servidor.listaClanes.get(i);
+				String clan1=clan.toString();
+				JsonParser parser = new JsonParser();
+				JsonElement elemento = parser.parse(clan1);
+				String mensaje_in=elemento.getAsJsonObject().get("nombre").getAsString();
+				if (mensaje_in.equals(nombreClan)){
+					resultado="false";
+					break;
+				}
+			
+			}
+			if(resultado.equals("true")){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
 	public void ValUser(Socket socket,JsonElement dato){
 		comunicacion=new HiloServidor(socket);
 		int tam=Servidor.listaUsuarios.size();

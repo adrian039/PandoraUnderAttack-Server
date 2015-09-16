@@ -19,7 +19,6 @@ public class RegUser{
 		//respuesta=new Servidor();
 		String user=elemento.getAsJsonObject().get("nombre").getAsString();
 		if(Servidor.listaUsuarios==null){
-			Servidor.listaUsuarios=new ListaEnlazada();
 			Servidor.listaUsuarios.add(elemento);
 			System.out.println(Servidor.listaUsuarios.get(0)); 
 			JsonObject o = new JsonObject();
