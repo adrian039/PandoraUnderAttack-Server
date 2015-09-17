@@ -40,7 +40,7 @@ public class Servidor {
 		e.printStackTrace();
 	}
 	}
-	private static void AgregarSocket(Socket socket1){
+	public static void AgregarSocket(Socket socket1){
 		boolean result=false;
 		if(Servidor.listaSockets!=null){
 			for(int s=0; s<Servidor.listaSockets.size();s++){

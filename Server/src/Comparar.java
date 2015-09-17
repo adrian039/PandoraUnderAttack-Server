@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class Comparar {
+public class Comparar{
 	HiloServidor comunicacion;
 	Gson gson = new Gson();
 	public Comparar(){
@@ -86,12 +86,20 @@ public class Comparar {
 				JsonObject o = new JsonObject();
 				o.addProperty("tipo", String.valueOf("login"));
 				o.addProperty("estado", String.valueOf("completo"));
+				if(FindClanUser(Name)){
+					o.addProperty("clan", String.valueOf("si"));
+				}
+				else{
+					o.addProperty("clan", String.valueOf("no"));
+				}
 				String enviar_mensaje = gson.toJson(o);
 				//funcion=enviar_mensaje.toString();
 				comunicacion.escribir(socket, enviar_mensaje);
 				break;
 			}
-			else{}
+			else{
+				
+			}
 			cont++;
 		}
 		if (tam==cont){
@@ -102,6 +110,28 @@ public class Comparar {
 			//funcion=enviar_mensaje.toString();
 			comunicacion.escribir(socket, enviar_mensaje);
 		}
+	}
+	public boolean FindClanUser(String nombre){
+		boolean resultado=false;
+		for(int i=0;i<Servidor.listaUsuarios.size();i++){
+			String user=Servidor.listaUsuarios.get(i).toString();
+			JsonParser parser = new JsonParser();
+			JsonElement elemento = parser.parse(user);
+			String nombreUser=elemento.getAsJsonObject().get("nombre").getAsString();
+			if(nombre.equals(nombreUser)){
+				String clan=elemento.getAsJsonObject().get("clan").getAsString();
+				if(clan.equals("")){
+					resultado=false;
+					break;
+				}
+				else{
+					resultado=true;
+					break;
+				}
+			}
+			else{}
+		}
+		return resultado;
 	}
 
 }

@@ -17,7 +17,10 @@ public class RegUser{
 		System.out.println(Servidor.listaUsuarios);
 		comunicacion=new HiloServidor(socket);
 		//respuesta=new Servidor();
-		String user=elemento.getAsJsonObject().get("nombre").getAsString();
+		JsonObject agregar=elemento.getAsJsonObject();
+		agregar.remove("socket");
+		agregar.addProperty("socket", socket.toString());
+		String user=agregar.getAsJsonObject().get("nombre").getAsString();
 		if(Servidor.listaUsuarios==null){
 			Servidor.listaUsuarios.add(elemento);
 			System.out.println(Servidor.listaUsuarios.get(0)); 

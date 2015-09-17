@@ -59,11 +59,13 @@ public class HiloServidor extends Thread{
 						}
 						else{
 							SolicitudClan enviar= new SolicitudClan();
-							enviar.EnviarSolicitud(socket, elemento);
-							o.addProperty("tipo", String.valueOf("RespSolicitud"));
-							o.addProperty("estado", String.valueOf("enviada"));
-							String enviar_mensaje=gson.toJson(o);
-							escribir(socket,enviar_mensaje);
+							if(enviar.EnviarSolicitud(elemento)){
+								o.addProperty("tipo", String.valueOf("RespSolicitud"));
+								o.addProperty("estado", String.valueOf("enviada"));
+								String enviar_mensaje=gson.toJson(o);
+								escribir(socket,enviar_mensaje);
+							}
+							
 						}
 					}
 					
