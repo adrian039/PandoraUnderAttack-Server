@@ -6,7 +6,11 @@ import java.net.Socket;
 
 import com.google.gson.Gson;
 
-
+/**
+ * Clase servidor (Main)
+ * @author Adrian Sánchez
+ *
+ */
 public class Servidor {
 	ServerSocket servidor=null;
 	String funcion;
@@ -17,9 +21,9 @@ public class Servidor {
 	RegUser registrar=null;
 	PrintWriter escritor=null;
 	Gson gson = new Gson();
-	public Servidor(){
-		
+	public Servidor(){		
 	}
+	
 	public static void main(String[] args) {
 		try{
 		Servidor server=new Servidor();
@@ -40,6 +44,10 @@ public class Servidor {
 		e.printStackTrace();
 	}
 	}
+	/**
+	 * Agrega a un nuevo socket
+	 * @param socket1
+	 */
 	public static void AgregarSocket(Socket socket1){
 		boolean result=false;
 		if(Servidor.listaSockets!=null){

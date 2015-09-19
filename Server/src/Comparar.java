@@ -4,12 +4,23 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+/**
+ * Esta clase permite realizar comparaciones de los datos almacenados en las listas enlazadas
+ * @author Adrian Sánchez
+ * 
+ *
+ */
 public class Comparar{
 	HiloServidor comunicacion;
 	Gson gson = new Gson();
 	public Comparar(){
 	}
+	/**
+	 * Verifica si el usuario esta repetido
+	 * @param socket
+	 * @param usuario
+	 * @return boolean
+	 */
 	public boolean UserComp(Socket socket, String usuario){
 		//listUsers=new RegUser();
 		comunicacion=new HiloServidor(socket);
@@ -40,6 +51,12 @@ public class Comparar{
 			}
 		}
 	}
+	/**
+	 * Verifica si el clan ingresado esta repetido
+	 * @param socket
+	 * @param nombreClan
+	 * @return bolean
+	 */
 	public boolean ClanComp(Socket socket, String nombreClan){
 		comunicacion=new HiloServidor(socket);
 		if (Servidor.listaClanes==null){
@@ -69,6 +86,12 @@ public class Comparar{
 			}
 		}
 	}
+	
+	/**
+	 * Valida si el usuario ya existe y si la contraseña es correcta
+	 * @param socket
+	 * @param dato
+	 */
 	public void ValUser(Socket socket,JsonElement dato){
 		comunicacion=new HiloServidor(socket);
 		int tam=Servidor.listaUsuarios.size();
@@ -111,6 +134,11 @@ public class Comparar{
 			comunicacion.escribir(socket, enviar_mensaje);
 		}
 	}
+	/**
+	 * Valida si el usuario ya pertenece a un clan
+	 * @param nombre
+	 * @return boolean
+	 */
 	public boolean FindClanUser(String nombre){
 		boolean resultado=false;
 		for(int i=0;i<Servidor.listaUsuarios.size();i++){

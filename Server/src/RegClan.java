@@ -4,7 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+/**
+ * Registra un clan
+ * @author Adrian Sánchez
+ *
+ */
 public class RegClan {
 	Gson gson = new Gson();
 	Comparar comparar=new Comparar();
@@ -12,6 +16,11 @@ public class RegClan {
 	public RegClan(){
 		
 	}
+	/**
+	 * Crea nuevo clan
+	 * @param socket
+	 * @param elemento
+	 */
 	public void newClan(Socket socket, JsonElement elemento){
 		System.out.println(Servidor.listaClanes);
 		comunicacion=new HiloServidor(socket);
@@ -53,6 +62,11 @@ public class RegClan {
 		}
 		
 	}
+	/**
+	 * Encuantra a un usuario
+	 * @param nombre
+	 * @param clan
+	 */
 	public void findUser(String nombre, String clan){
 		System.out.println(Servidor.listaUsuarios.get(0));
 		for(int i=0;i<Servidor.listaUsuarios.size();i++){

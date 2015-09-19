@@ -20,7 +20,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
-
+/**
+ * 
+ * Esta clase genera un cliente en la PC
+ *
+ */
 public class Cliente {
 	JFrame ventana_chat=null;
 	JButton btn_enviar=null;
@@ -33,6 +37,7 @@ public class Cliente {
 	BufferedReader lector=null;
 	PrintWriter escritor=null;
 	Gson gson = new Gson();
+	
 	public static void main(String[] args) {
 		new Cliente();
 		
@@ -40,6 +45,9 @@ public class Cliente {
 	public Cliente(){
 		hacerInterfaz();
 	}
+	/**
+	 * Crea la interfaz gráfica del cliente
+	 */
 	public void hacerInterfaz(){
 	ventana_chat=new JFrame("Cliente");
 	btn_enviar = new JButton("Enviar");
@@ -73,6 +81,9 @@ public class Cliente {
 	});
 	principal.start();
 	}
+	/**
+	 * Crea un hilo que lee datos del servidor
+	 */
 	public void leer(){
 		Thread leer_hilo=new Thread(new Runnable(){
 		public void run(){
@@ -94,6 +105,9 @@ public class Cliente {
 	});
 		leer_hilo.start();
 	}
+	/**
+	 * Escribe o envia datos al servidor
+	 */
 	public void escribir(){
 		Thread escribir_hilo=new Thread(new Runnable(){
 			public void run(){

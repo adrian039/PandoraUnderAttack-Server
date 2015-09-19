@@ -4,13 +4,22 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+/**
+ * Solicitud del clan
+ * @author Adrian Sánchez
+ *
+ */
 public class SolicitudClan extends Servidor{
 	HiloServidor comunicacion;
 	Gson gson = new Gson();
 	public SolicitudClan(){
 		
 	}
+	/**
+	 * 
+	 * @param elemento
+	 * @return
+	 */
 	public boolean EnviarSolicitud(JsonElement elemento){
 		boolean resultado=false;
 		System.out.println(Servidor.listaClanes);

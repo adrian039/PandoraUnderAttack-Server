@@ -6,19 +6,30 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+/**
+ * 
+ * Esta es clase el hilo del servidor
+ * @author Adrian Sánchez
+ *
+ */
 public class HiloServidor extends Thread{
 	protected Socket socket;
     protected Servidor server;
     BufferedReader lector=null;
     PrintWriter escritor=null;
 	Gson gson = new Gson();
-    
+   /**
+    *  Costructor
+    * @param socketCliente
+    */
     public HiloServidor(Socket socketCliente){
     	
     	this.socket=socketCliente;
     	leer();
     }
+    /**
+     * Lee lo que los clientes le envian
+     */
     public void leer(){
 		Thread leer_hilo=new Thread(new Runnable(){
 		public void run(){
@@ -68,6 +79,9 @@ public class HiloServidor extends Thread{
 							
 						}
 					}
+					else if(mensaje_in.equals("buscarReliquia")){
+						
+					}
 					
 				}
 			}catch(Exception ex){
@@ -78,6 +92,12 @@ public class HiloServidor extends Thread{
 	});
 		leer_hilo.start();
 	}
+    
+    /**
+     * Escribe a los clientes
+     * @param socket
+     * @param dato
+     */
 	public void escribir(final Socket socket, final String dato){
 		Thread escribir_hilo=new Thread(new Runnable(){
 			public void run(){
